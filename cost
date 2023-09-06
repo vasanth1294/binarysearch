@@ -1,0 +1,77 @@
+#include<stdio.h>
+int a[10][10]={{0,3,1,6},{3,0,5,1},{1,5,0,6},{6,0,5,0}},v[10],n,k1=1,sum=0;
+int check(int n,int b)
+{
+	int i,f=0,m;
+	for(i=0;i<k1;i++)
+	{
+		if(v[i]==n)
+		f=1;	
+	}
+	if(f!=1){
+		v[k1]=n;
+		m=a[b][n];
+		return m;
+	}
+	else {
+		printf("n%d",n);
+		n=n+1;
+		return check(n,b);	
+	}
+} 
+int tra(int b){
+	int i,j,k=0,min,fl,nod=0,v1=0;
+	k=k1;
+	// taking 1st element as min becoz to search  
+	for(i=1;i<=n;i++){
+		if(i!=b){
+		min=a[b][i];
+		nod=i;
+		break;
+	}
+	}
+	for(i=1;i<=n;i++)
+	{
+		fl=0;
+		if(a[b][i]<min & i!=b)
+		{
+			min=a[b][i];
+			nod=i;
+		//	printf("ss%d",nod);
+		}
+	}
+	min=check(nod,b);
+	k++;
+	k1=k;
+	sum+=min;
+	if(k!=n){
+		printf("%d ",k1);
+		return tra(v[k-1]);
+	}
+	else
+	return;
+}
+
+
+int main()
+{
+	int i,j,t;
+	printf("\nenter the  no of cities : ");
+	scanf("%d",&n);
+	v[0]=1;
+	
+	for(i=1;i<=n;i++)
+	{
+		for(j=1;j<=n;j++)
+		{
+			printf("\nenter the cost from %d to %d : ",i,j);
+			scanf("%d",&a[i][j]);
+		}
+	}
+	t=tra(1);
+	for(i=0;i<k1;i++)
+	printf("%d-> ",v[i]);
+	printf("\ntotal cost : %d",sum);
+	
+	
+}
