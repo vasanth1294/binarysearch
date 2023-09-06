@@ -1,0 +1,73 @@
+#include<stdio.h>
+float c[10][10],cost=0,p[10];
+int n; 
+int check(int a,int b)
+{
+	int k[10],i,j=2,l;
+	float sum=0,res[10],tmp,min;
+	k[0]=a;
+	k[1]=b;
+	for(i=a+1;i<=b;i++)
+	{
+		if(i!=b)
+		{
+			tmp=k[j-1];
+			k[j-1]=i;
+			k[j]=b;
+			j++;
+		}
+	}
+	for(i=a;i<=b;i++)
+	{
+		sum+=p[i];
+	}
+	for(i=0;i<j;i++)
+	{
+		l=k[i];
+		tmp=c[l+1][b]+sum;
+		res[i]=(c[a][l-1])+tmp;
+		printf("%f ",res[i]);
+	}
+	min=res[0];
+	for(i=0;i<j;i++)
+	{
+		if(res[i]<min)
+		{
+			min=res[i];
+		}
+	}
+	cost+=min;
+}
+int main()
+{
+	int i,j,k,m;
+	printf("\nenter the no of keys : ");
+	scanf("%d",&n);
+	for(i=1;i<=n;i++)
+	{
+		printf("\nenter the freq : ");
+		scanf("%f",&p[i]);
+	}
+	for(i=1;i<=n+1;i++)
+	{
+		for(j=0;j<=n;j++)
+		{
+			c[i][j]=0;
+		}
+	}
+	for(i=1;i<=n+1;i++)
+	{
+		c[i][i]=p[i];
+	}
+	k=2;
+	for(i=1;i<=n-1;i++)
+	{
+		m=1;
+		for(j=k;j<=n;j++)
+		{
+			check(m,j);
+			m++;
+		}
+	}
+	printf("\nc%f",cost); 
+}
